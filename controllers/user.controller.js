@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const dotenv= require('dotenv');
 
 const userModel = require('../models/user.model');
+const emailService = require('../services/EmailService');
 
+dotenv.config();
 
 exports.register = async (req, res) => {
 
@@ -24,14 +28,15 @@ exports.register = async (req, res) => {
         return res.status(500).send({ success: false, message: error.message })
     }
 }
-
 exports.login = async (req, res) => {
 
     try {
         let user = await userModel.findOne({ username: req.body.username });
         if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                res.status(200).send({ success: true, message: "Login success!" });
+                var payload= {subject: user._id}
+                 var token = jwt.sign(payload,process.env.JWT_SECRET);
+                res.status(200).send({ success: true,token:token, _id:user._id,message: "Login success!" });
             }
             else {
                 res.status(401).send({ success: true, message: "Password incorrect" });
@@ -45,7 +50,6 @@ exports.login = async (req, res) => {
         return res.status(500).send({ success: false, message: error.message })
     }
 }
-
 exports.changePassword = async (req, res) => {
     try {
         let user = await userModel.findOne({ username: req.body.username });
@@ -79,6 +83,25 @@ exports.changePassword = async (req, res) => {
     }
 }
 
-//$2b$10$Xmn5xA552FjOwiTVIwxRT.jFAUCzi4Qzr5hZdZnxsKPNcUqjc8lRy
+exports.forgotPassword =  async (req, res) => {
 
-// $2b$10$Xmn5xA552FjOwiTVIwxRT.jFAUCzi4Qzr5hZdZnxsKPNcUqjc8lRy
+    try {
+        let user = await userModel.findOne({ email: req.body.email});
+        if (user) {
+                 emailService.sendEmail({ 
+                     to: req.body.email,
+                     subject : "Email Reset",
+                     html: `
+                            <a href="http://www.facebook.com">Password reset link</a>
+                     `
+                    })
+                res.status(200).send({ success: true,message: "password reset link has been shared to your email" });
+            }
+            else {
+                res.status(404).send({ success: true, message: "Email Not found" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+}
