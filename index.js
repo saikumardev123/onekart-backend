@@ -15,12 +15,16 @@ dotenv.config();
 // user defined modules 
 var db = require('../onekart-backend/utilities/db.config');
 var userRouter = require('../onekart-backend/routes/user.route');
+var categoryRouter = require("../onekart-backend/routes/category.route");
+var productRouter = require("../onekart-backend/routes/product.route");
 
 db.connectToDB();
 
 
 // Routes Configuration
 app.use(`${process.env.API_URL}/user`,userRouter);
+app.use(`${process.env.API_URL}/category`,categoryRouter);
+app.use(`${process.env.API_URL}/product`,productRouter);
 
 // http://localhost:portno/api/v1.0.0/healthcheck
 app.get(`${process.env.API_URL}/healthcheck`, (req,res) => {
