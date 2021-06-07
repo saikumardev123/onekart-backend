@@ -14,3 +14,70 @@ exports.add = async (req, res) => {
         return res.status(500).send({ success: false, message: error.message })
     }
 }
+
+
+exports.list = async (req, res) => {
+    try {
+        let docs = await productModel.find();
+        if (docs)
+            res.status(201).send({ success: true,products:docs, message: "products fetched successfully!" });
+        else
+            res.status(404).send({ success: false, message: "Something went wrong" });
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+}
+
+exports.getById = async (req, res) => {
+  
+    try {
+        let product = await productModel.findById({ _id: req.params.id});
+        if (product) {
+                res.status(200).send({ success: true, product: product });
+            }
+            else {
+                res.status(404).send({ success: true, message: "product Not found" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+      
+}
+
+exports.deletebyId = async (req, res) => {
+
+    try {
+        let product = await productModel.findByIdAndRemove(req.params.id);
+        if (product) {
+                res.status(200).send({ success: true, message: "deleted successfully!" });
+            }
+            else {
+                res.status(404).send({ success: true, message: "product Not found" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+
+}
+
+exports.updateById = async (req, res) => {
+  
+    try {
+        let product = await productModel.findByIdAndUpdate(req.params.id,req.body, {new:true});
+        if (product) {
+                res.status(200).send({ success: true, message: "updated successfully!" });
+            }
+            else {
+                res.status(404).send({ success: true, message: "product Not found" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+
+}
+
+

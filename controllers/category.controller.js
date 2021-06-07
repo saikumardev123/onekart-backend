@@ -22,7 +22,7 @@ exports.list = async (req, res) => {
     try {
         let docs = await categoryModel.find();
         if (docs)
-            res.status(201).send({ success: true,categories:docs, message: "Category added successfully!" });
+            res.status(201).send({ success: true,categories:docs, message: "Categories fetched successfully!" });
         else
             res.status(404).send({ success: false, message: "Something went wrong" });
 
