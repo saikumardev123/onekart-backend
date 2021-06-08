@@ -27,8 +27,12 @@ var validateEmail = function(email) {
         unqiue:true,
         required:true,
         validate:[validateEmail,'email id is not appropriate']
+       },
+       isAdmin:{
+        type: Boolean,
+        required:true,
+        default:false
        }
      
   })
-
    module.exports= mongoose.model('user',userSchema);

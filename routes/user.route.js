@@ -19,8 +19,8 @@ var authMiddleware = function(req,res,next){
                 try{                
                var payload=jwt.verify(token, process.env.JWT_SECRET);
                
-               console.log(payload);
-               console.log(req.body._id);
+               console.log("payload",payload);
+               console.log("req.body._id",req.body._id);
                if(payload.subject == req.body._id){
                    next();
                }
@@ -53,6 +53,8 @@ userRouter.post('/register',userController.register);
 userRouter.post('/login', userController.login);
 
 userRouter.put('/changePassword',authMiddleware ,userController.changePassword);
+
+userRouter.patch("/updateRole", authMiddleware, userController.updateRole);
 
 module.exports = userRouter;
 

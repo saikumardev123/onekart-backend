@@ -12,7 +12,8 @@ exports.register = async (req, res) => {
     var user = {
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password, 10),
-        email: req.body.email,
+        email: req.body.email
+        
     };
 
     let document = new userModel(user);
@@ -104,4 +105,37 @@ exports.forgotPassword =  async (req, res) => {
     } catch (error) {
         return res.status(500).send({ success: false, message: error.message })
     }
+}
+
+   
+exports.updateRole = async (req, res) => {
+  
+     console.log(req.body);
+
+      
+
+    try {
+        console.log("_id",req.body._id);
+        let user= await userModel.findOne({_id:req.body._id});
+        console.log('user',user);
+         if(user.isAdmin){
+            let updatedUser = await userModel.findByIdAndUpdate(req.body.target_id,{isAdmin:req.body.isAdmin}, {new:true});
+            if (updatedUser) {
+                    res.status(200).send({ success: true, message: "role updated successfully!" });
+                }
+                else {
+                    res.status(404).send({ success: true, message: "user Not found" });
+                }
+         }
+         else
+         {
+             res.status(401).send({success:false, message:"Unauthorized operation"});
+         }
+        
+        
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+
 }
