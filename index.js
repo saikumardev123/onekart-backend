@@ -17,6 +17,7 @@ var db = require('../onekart-backend/utilities/db.config');
 var userRouter = require('../onekart-backend/routes/user.route');
 var categoryRouter = require("../onekart-backend/routes/category.route");
 var productRouter = require("../onekart-backend/routes/product.route");
+var orderRouter = require("../onekart-backend/routes/order.route");
 
 db.connectToDB();
 
@@ -40,6 +41,8 @@ var swaggerOptions= {
 app.use(`${process.env.API_URL}/user`,userRouter);
 app.use(`${process.env.API_URL}/category`,categoryRouter);
 app.use(`${process.env.API_URL}/product`,productRouter);
+app.use(`${process.env.API_URL}/order`,orderRouter);
+
 
   const sDocs =swaggerDocs(swaggerOptions);
 

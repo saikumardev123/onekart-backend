@@ -139,3 +139,28 @@ exports.updateRole = async (req, res) => {
     }
 
 }
+
+
+/*
+
+Develop a small application as specified below
+
+·  On initial loading of application it should show the data in the grid.
+
+·  Each row should have a column called edit and delete
+
+·  On click of edit it should navigate to edit screen should be able populate that edit and come back to previous screen
+
+·  On click of delete navigate to new delete confirmation screen and on delete it should come back to previous screen
+
+·  On top of the grid you should add a button to navigate to Add new post screen on click of Add in that new screen should comeback to previous screen and update the grid with this new data which is added
+
+·  Edit screen should be taken to same page but should populate with existing data and route name should be changed
+
+·  All components should be functional components
+
+You can use the link below for the data , take this JSON data into state variable and use this data to update delete add into this state
+
+
+*/
+ 
