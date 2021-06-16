@@ -10,6 +10,40 @@ exports.allOrders = async (req,res) => {
            return res.status(200).send(orders);
 }
 
+exports.getOrderById = async (req, res) => {
+  
+    try {
+        let order = await orderModel.findById({ _id: req.params.id});
+        if (order) {
+                res.status(200).send(order);
+            }
+            else {
+                res.status(404).send({ success: false, message: "Something went wrong!!" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+      
+}
+
+exports.updateOrderById = async (req, res) => {
+  
+    try {
+        let order = await orderModel.findByIdAndUpdate(req.params.id,req.body, {new:true});
+        if (order) {
+                res.status(200).send({ success: true, message: "order updated successfully!" });
+            }
+            else {
+                res.status(404).send({ success: true, message: "order Not found" });
+            }
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+
+}
+
 exports.addOrder = async (req,res) => {
 
    const orderItemsIds=Promise.all(req.body.orderItems.map( async orderItem => {
@@ -66,3 +100,19 @@ exports.addOrder = async (req,res) => {
 
 
 */
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+

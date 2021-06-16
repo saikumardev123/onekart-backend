@@ -80,4 +80,22 @@ exports.updateById = async (req, res) => {
 
 }
 
+exports.filter= async(req,res) => {
+       var term = req.body.term;
+       var condition = req.body.condition;
+       console.log(req.body);
+       console.log({[term]:condition});
+    try {
+        let docs = await productModel.find().sort({[term]:condition});
+        if (docs)
+            res.status(201).send(docs);
+        else
+            res.status(404).send({ success: false, message: "Something went wrong" });
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+
+}
+
 

@@ -9,6 +9,7 @@ productRouter.get('/list', productController.list);
 productRouter.get('/:id', productController.getById);
 productRouter.delete('/:id', productController.deletebyId);
 productRouter.put('/:id', productController.updateById);
+productRouter.get('/list/filter',productController.filter);
 
 module.exports = productRouter;
 
