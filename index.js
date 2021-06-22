@@ -5,10 +5,12 @@ const swaggerDocs = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 // Express App Creation
 const app= express();
+const cors = require('cors');
 
 
 // middlewares 
 app.use(express.json());
+app.use(cors());
 
 dotenv.config();
 
