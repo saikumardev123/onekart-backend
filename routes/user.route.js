@@ -54,7 +54,7 @@ userRouter.post('/login', userController.login);
 
 userRouter.put('/changePassword',authMiddleware ,userController.changePassword);
 
-userRouter.patch("/updateRole", authMiddleware, userController.updateRole);
+userRouter.patch("/updateRole", userController.updateRole);
 
 userRouter.get('/allUsers', userController.getAllUsers);
 
