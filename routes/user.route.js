@@ -56,6 +56,8 @@ userRouter.put('/changePassword',authMiddleware ,userController.changePassword);
 
 userRouter.patch("/updateRole", authMiddleware, userController.updateRole);
 
+userRouter.get('/allUsers', userController.getAllUsers);
+
 module.exports = userRouter;
 
 

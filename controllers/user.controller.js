@@ -20,8 +20,11 @@ exports.register = async (req, res) => {
 
     try {
         let doc = await document.save();
-        if (doc)
-            res.status(201).send({ success: true, message: "Registered successfully!" });
+        if (doc){
+        var payload= {subject: doc._id}
+        var token = jwt.sign(payload,process.env.JWT_SECRET);
+            res.status(201).send({ success: true,token:token,message: "Registered successfully!" });
+        }
         else
             res.status(404).send({ success: false, message: "Something went wrong" });
 
@@ -139,6 +142,23 @@ exports.updateRole = async (req, res) => {
     }
 
 }
+
+exports.getAllUsers=  async (req, res) => {
+
+    try {
+        let docs = await userModel.find();
+        if (docs)
+            res.status(201).send({ success: true,allUsers:docs, message: "users fetched successfully!" });
+        else
+            res.status(404).send({ success: false, message: "Something went wrong" });
+
+    } catch (error) {
+        return res.status(500).send({ success: false, message: error.message })
+    }
+  
+}
+
+
 
 
 /*
